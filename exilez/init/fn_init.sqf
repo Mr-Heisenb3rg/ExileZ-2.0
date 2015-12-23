@@ -85,9 +85,9 @@ A2Buildings              = false;      // set to true if using A2 Maps or maps w
 //Default Altis SafeZones
 SafeZonePositions =
 [//  [[Coordinates],Radius]  // You can Get the safezone information directly from your mission.sqm under class Markers
-  [[14599,16797],175],
-  [[23334,24188],175],
-  [[2998,18175],175]
+[[14599,16797],175],
+[[23334,24188],175],
+[[2998,18175],175]
 ];
 
 // HeadlessClient settings *** Currently not supported ***
@@ -99,9 +99,7 @@ UseHC           = false;       // set to true if running Headless Client
 //////////////////////////////////////////
 sleep 1;
 diag_log "\\\ --- Starting ExileZ 2.0 --- ///";
-
 private["_return","_result","_count"];
-
 #include "ZClassesList.sqf";
 #include "ZLoot.sqf";
 #include "ZVest.sqf";
@@ -118,33 +116,15 @@ ZMPKilled = compile preprocessFile "exilez\init\code\MPKilled.sqf";
 Safezone = compile preprocessFile "exilez\init\code\Safezone.sqf";
 
 //Create Main Triggers
-if (UseSpawners) then
-{
-  {  nul = [_x] spawn CreateTriggers;
-    sleep 0.01;
-  }foreach TownPositions;
-};
+if (UseSpawners) then{{nul = [_x] spawn CreateTriggers;sleep 0.01;}foreach TownPositions; };
 
 //enable secondary spawners
-if (UseSecSpawners) then
-{
-  {  nul = [_x] spawn SecCreateTriggers;
-    sleep 0.01;
-  }foreach Secondary_TownPositions;
-};
+if (UseSecSpawners) then{{nul = [_x] spawn SecCreateTriggers;sleep 0.01;}foreach Secondary_TownPositions; };
 
 //Create Triggers for safezones
-if (ProtectSafezones) then
-{
-  {  nul = [_x] spawn Safezone;
-    sleep 0.01;
-  }foreach SafeZonePositions;
-};
+if (ProtectSafezones) then{{nul = [_x] spawn Safezone;sleep 0.01;}foreach SafeZonePositions; };
 
 //Enable the HarassingZombies
-if (UseHarassingZombies) then {
-  nul = [] spawn HarassingZombies;
-};
+if (UseHarassingZombies) then {nul = [] spawn HarassingZombies; };
 sleep 1;
-
 diag_log "/// --- ExileZ 2.0 Started --- \\\";
